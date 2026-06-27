@@ -17,8 +17,6 @@ I made this project to show a complete analyst workflow:
 - SQL
 - PostgreSQL
 - Streamlit
-- Plotly
-- Docker
 
 ## Project Flow
 
@@ -147,8 +145,3 @@ Open the `sample/` folder to quickly see professional screenshots and preview fi
 - Project architecture
 - KPI summary
 
-## Interview Explanation
-
-I can explain this project like this:
-
-> I built a retail analytics project using Zepto inventory data. I cleaned the raw CSV using Python, created revenue and inventory metrics, added dashboard-ready fields, wrote SQL queries for business analysis, and built a Streamlit dashboard with filters, charts, map analysis, and reorder suggestions.
