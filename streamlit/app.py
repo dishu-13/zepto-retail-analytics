@@ -5,6 +5,27 @@ import streamlit as st
 
 st.set_page_config(page_title="Zepto Retail Analytics", layout="wide")
 
+st.markdown(
+    """
+    <style>
+    .block-container {
+        padding-top: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 2.5rem !important;
+        line-height: 1.15 !important;
+    }
+    [data-testid="stMetricValue"] {
+        font-size: 2rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 # Load cleaned data
 data = pd.read_csv("data/processed/zepto_cleaned.csv")
@@ -128,6 +149,7 @@ if page == "Executive":
         title="Stock Status Split",
         hole=0.45,
     )
+    fig2.update_traces(textposition="inside", textinfo="percent+label")
     c2.plotly_chart(fig2, width="stretch")
 
     c3, c4 = st.columns(2)
@@ -203,6 +225,7 @@ elif page == "Revenue":
         values="products",
         title="Product Count by Revenue Band",
     )
+    fig4.update_traces(textposition="inside", textinfo="percent+label")
     c4.plotly_chart(fig4, width="stretch")
 
     st.dataframe(

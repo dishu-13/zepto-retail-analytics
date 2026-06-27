@@ -135,15 +135,17 @@ The `sql/` folder contains:
 - `schema.sql`: table structure
 - `analysis_queries.sql`: business analysis queries
 
-## HR Preview
+## HR Preview Samples
 
-Open the `sample/` folder to quickly see screenshots of:
+Open the `sample/` folder to quickly see professional screenshots and preview files:
 
 - Dashboard pages
 - Cleaned dataset preview
 - SQL analysis file
 - Python ETL file
 - Project report
+- Project architecture
+- KPI summary
 
 ## Interview Explanation
 
