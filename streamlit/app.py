@@ -48,9 +48,16 @@ discount_range = st.sidebar.slider(
     (int(data["discount"].min()), int(data["discount"].max())),
 )
 
+pages = ["Executive", "Revenue", "Inventory", "Location", "Product Search"]
+page_from_url = st.query_params.get("page", "Executive")
+
+if page_from_url not in pages:
+    page_from_url = "Executive"
+
 page = st.sidebar.radio(
     "Dashboard Page",
-    ["Executive", "Revenue", "Inventory", "Location", "Product Search"],
+    pages,
+    index=pages.index(page_from_url),
 )
 
 

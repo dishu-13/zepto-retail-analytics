@@ -2,42 +2,36 @@
 
 This is my end-to-end Data Analyst portfolio project using a Zepto retail inventory dataset.
 
-I built this project to show the complete workflow of a data analyst:
+I made this project to show a complete analyst workflow:
 
-1. Collect raw data
-2. Clean it using Python
-3. Store it in PostgreSQL
-4. Analyze it using SQL
-5. Build a Power BI dashboard plan
-6. Create a simple Streamlit web app
-7. Write business recommendations
-
-The project is simple on purpose. I wanted it to be easy to explain in interviews and still show real business thinking.
+1. Clean raw CSV data using Python
+2. Create business columns like revenue and inventory value
+3. Store and analyze the data using SQL
+4. Build an interactive Streamlit dashboard
+5. Share business insights in a simple project report
 
 ## Tech Stack
 
 - Python
 - Pandas
-- PostgreSQL
 - SQL
-- Power BI
+- PostgreSQL
 - Streamlit
+- Plotly
 - Docker
-- GitHub
 
-## Project Architecture
+## Project Flow
 
 ```text
-CSV Dataset
-    -> Python ETL
-    -> PostgreSQL Database
-    -> SQL Analysis
-    -> Power BI Dashboard
-    -> Streamlit Web App
-    -> Business Recommendations
+Raw CSV
+   -> Python Data Cleaning
+   -> Cleaned CSV
+   -> SQL Analysis
+   -> Streamlit Dashboard
+   -> Business Insights
 ```
 
-## Folder Structure
+## Final Folder Structure
 
 ```text
 zepto-retail-analytics/
@@ -46,187 +40,113 @@ zepto-retail-analytics/
 |   |   |-- zepto.csv
 |   |-- processed/
 |       |-- zepto_cleaned.csv
-|-- notebooks/
-|   |-- 01_eda.ipynb
+|-- sample/
+|   |-- dashboard screenshots and HR preview files
 |-- sql/
 |   |-- schema.sql
 |   |-- analysis_queries.sql
-|   |-- load_processed_csv.sql
-|-- dashboard/
-|   |-- powerbi_notes.md
 |-- streamlit/
 |   |-- app.py
-|-- screenshots/
-|-- business_recommendations.md
-|-- PROJECT_REPORT.md
-|-- docker-compose.yml
 |-- etl.py
-|-- requirements.txt
+|-- PROJECT_REPORT.md
 |-- README.md
+|-- requirements.txt
+|-- docker-compose.yml
 ```
+
+## What The Project Does
+
+The project analyzes Zepto inventory and product data to answer questions like:
+
+- Which categories generate the most revenue?
+- Which products are top performers?
+- Which products are out of stock?
+- Which cities and regions perform better?
+- Which products need reorder attention?
+- Which products have high discount and high revenue?
 
 ## Dataset
 
-The raw dataset contains product-level inventory data from Zepto.
+The original CSV has:
 
-Main columns in the raw file:
+- Product category
+- Product name
+- MRP
+- Discount
+- Selling price
+- Available quantity
+- Weight
+- Out-of-stock flag
 
-- `Category`
-- `name`
-- `mrp`
-- `discountPercent`
-- `availableQuantity`
-- `discountedSellingPrice`
-- `weightInGms`
-- `outOfStock`
-- `quantity`
+The original data did not have location fields, so I added synthetic city, state, region, warehouse, latitude, and longitude columns only for dashboard practice and map visuals.
 
-The price columns in the raw dataset are stored in paise. I converted them into rupees during data cleaning.
-
-## Data Cleaning
-
-I cleaned the data using Python and Pandas.
-
-Cleaning steps:
-
-1. Removed duplicate rows
-2. Removed products where MRP or selling price was zero
-3. Converted MRP from paise to rupees
-4. Converted selling price from paise to rupees
-5. Created revenue column
-6. Created inventory value column
-7. Created price per gram column
-8. Created weight category column
-9. Added synthetic city, region, warehouse, latitude, and longitude fields for dashboard practice
-
-New columns created:
+## New Columns Created
 
 ```text
 revenue = selling_price * available_quantity
 inventory_value = mrp * available_quantity
 price_per_gram = selling_price / weight
-weight_category = Small / Medium / Large
+estimated_profit = selling_price * 18% * available_quantity
+stock_status = Healthy Stock / Low Stock / Out of Stock
+revenue_band = Low Revenue / Medium Revenue / High Revenue
 ```
 
-Note: The original CSV does not contain location fields. I added synthetic location and warehouse columns so the Streamlit dashboard can show map and regional analysis.
+## Dashboard Features
 
-## How To Run
+The Streamlit dashboard includes:
 
-### 1. Install libraries
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Create cleaned CSV
-
-```bash
-python etl.py
-```
-
-This creates:
-
-```text
-data/processed/zepto_cleaned.csv
-```
-
-### 3. Start PostgreSQL using Docker
-
-```bash
-docker compose up -d
-```
-
-### 4. Load data into PostgreSQL
-
-```bash
-python etl.py --load-db
-```
-
-This creates a PostgreSQL table:
-
-```text
-products
-```
-
-### 5. Run SQL analysis
-
-Open this file in pgAdmin, DBeaver, or another PostgreSQL client:
-
-```text
-sql/analysis_queries.sql
-```
-
-### 6. Run Streamlit app
-
-```bash
-streamlit run streamlit/app.py
-```
-
-## SQL Questions Answered
-
-- What is the total revenue?
-- Which categories generate the highest revenue?
-- What are the top 10 products by revenue?
-- What is each category's revenue contribution?
-- Which categories have the most out-of-stock products?
-- Which products have the highest discount?
-- Which products give the best value by price per gram?
-- Which products need reorder attention?
-
-## Power BI Dashboard Plan
-
-I planned four dashboard pages:
-
-1. Executive Dashboard
-2. Category Dashboard
-3. Product Dashboard
-4. Inventory Dashboard
-
-Main KPIs:
-
-- Total Revenue
-- Inventory Value
-- Total Products
-- Out of Stock Products
-- Average Discount
-
-## Streamlit App Features
-
-The Streamlit app includes:
-
+- Executive overview
 - Revenue dashboard
 - Inventory dashboard
-- Executive dashboard
 - Location map dashboard
+- Product search
 - Category filter
 - Region filter
 - City filter
 - Stock status filter
 - Discount range filter
-- Product search
-- Download cleaned report button
+- KPI cards
+- Bar chart, pie chart, treemap, scatter chart, line chart, box plot, and map
 
-## Business Recommendations
+## How To Run
 
-Based on the analysis, my recommendations are:
+Install libraries:
 
-1. Increase stock for high-revenue categories with out-of-stock products.
-2. Review high-discount products because they may reduce profit margin.
-3. Promote products with low price per gram as value-for-money items.
-4. Monitor inventory value by category to avoid overstocking.
-5. Create reorder alerts for products with low available quantity.
+```bash
+pip install -r requirements.txt
+```
 
-## What I Learned
+Run data cleaning:
 
-This project helped me practice:
+```bash
+python etl.py
+```
 
-- Data cleaning with Pandas
-- PostgreSQL table design
-- SQL business analysis
-- Dashboard planning
-- Streamlit app development
-- Turning data into business recommendations
+Run dashboard:
 
-## Project Status
+```bash
+streamlit run streamlit/app.py
+```
 
-Completed as a portfolio project. Power BI screenshots can be added inside the `screenshots/` folder after creating the dashboard.
+## SQL Files
+
+The `sql/` folder contains:
+
+- `schema.sql`: table structure
+- `analysis_queries.sql`: business analysis queries
+
+## HR Preview
+
+Open the `sample/` folder to quickly see screenshots of:
+
+- Dashboard pages
+- Cleaned dataset preview
+- SQL analysis file
+- Python ETL file
+- Project report
+
+## Interview Explanation
+
+I can explain this project like this:
+
+> I built a retail analytics project using Zepto inventory data. I cleaned the raw CSV using Python, created revenue and inventory metrics, added dashboard-ready fields, wrote SQL queries for business analysis, and built a Streamlit dashboard with filters, charts, map analysis, and reorder suggestions.
